@@ -1,0 +1,19 @@
+Description: stop linking with -lcrypto
+ AC_CHECK_LIB during configure unnecessary brought -lcrypto into dependency
+ loop. Stop linking with -lcrypto by adding a colon in ACTION_IF_FOUND in
+ AC_CHECK_LIB
+Author: Dmitry Eremin-Solenikov <dbaryshkov@gmail.com>
+
+---
+
+--- gppcscconnectionplugin-1.1.0.orig/configure.in
++++ gppcscconnectionplugin-1.1.0/configure.in
+@@ -192,7 +192,7 @@ AC_CHECK_HEADERS(openssl/rand.h openssl/
+         [AC_MSG_ERROR([OpenSSL headers not found, install OpenSSL
+ 0.9.7e or later, or use CFLAGS=... ./configure])])
+ 
+-AC_CHECK_LIB(crypto, PEM_read_PrivateKey, [],
++AC_CHECK_LIB(crypto, PEM_read_PrivateKey, [:],
+         [AC_MSG_ERROR([PEM_read_PrivateKey() not
+ found, install OpenSSL 0.9.7e or later])])
+ 

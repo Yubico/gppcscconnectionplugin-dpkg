@@ -1,0 +1,15 @@
+Source: gppcscconnectionplugin
+Section: libs
+Priority: extra
+Maintainer: Dmitry Eremin-Solenikov <dbaryshkov@gmail.com>
+Build-Depends: debhelper (>= 8.0.0), autotools-dev, libglobalplatform-dev, libssl-dev, libpcsclite-dev
+Standards-Version: 3.9.2
+Homepage: http://globalplatform.sourceforge.net/
+
+Package: libgppcscconnectionplugin1
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: globalplatform-connection-plugin
+Description: PC/SC connection plugin for GlobalPlatform Library
+ This package provides a GlobalPlatform library a possibility
+ to use PC/SC middleware/daemon to access smart cards.

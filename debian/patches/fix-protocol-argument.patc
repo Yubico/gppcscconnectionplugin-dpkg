@@ -1,0 +1,43 @@
+Description: handle protocol argument correctly
+ Now as globalplatform library provides only generic name for protocol,
+ we should translate it into SCARD_PROTOCOL_Tx on our own.
+Author: Dmitry Eremin-Solenikov <dbaryshkov@gmail.com>
+
+---
+
+--- gppcscconnectionplugin-1.1.0.orig/src/gppcscconnectionplugin.c
++++ gppcscconnectionplugin-1.1.0/src/gppcscconnectionplugin.c
+@@ -198,6 +198,7 @@ OPGP_ERROR_STATUS OPGP_PL_card_connect(O
+ 	DWORD ATRLength=32;
+ 	TCHAR readerNameTemp[1024];
+ 	DWORD readerNameTempLength = 1024;
++	DWORD pcscProtocol;
+ 
+ 	OPGP_LOG_START(_T("OPGP_PL_card_connect"));
+ 	CHECK_CARD_CONTEXT_INITIALIZATION(cardContext, status)
+@@ -208,12 +209,24 @@ OPGP_ERROR_STATUS OPGP_PL_card_connect(O
+ 		goto end;
+ 	}
+ 
++	switch (protocol) {
++		case OPGP_CARD_PROTOCOL_T0:
++			pcscProtocol = SCARD_PROTOCOL_T0;
++			break;
++		case OPGP_CARD_PROTOCOL_T1:
++			pcscProtocol = SCARD_PROTOCOL_T1;
++			break;
++		default:
++			OPGP_ERROR_CREATE_ERROR(status, EINVAL, OPGP_stringify_error(EINVAL));
++			goto end;
++	}
++
+ 	pcscCardInfo = GET_PCSC_CARD_INFO_SPECIFIC_P(cardInfo);
+ 
+ 	result = SCardConnect( GET_SCARDCONTEXT(cardContext),
+ 							readerName,
+ 							SCARD_SHARE_SHARED,
+-							protocol,
++							pcscProtocol,
+ 							&(pcscCardInfo->cardHandle),
+ 							&activeProtocol );
+ 	if ( SCARD_S_SUCCESS != result ) {
