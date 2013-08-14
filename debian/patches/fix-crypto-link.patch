@@ -1,19 +1,27 @@
-Description: stop linking with -lcrypto
- AC_CHECK_LIB during configure unnecessary brought -lcrypto into dependency
- loop. Stop linking with -lcrypto by adding a colon in ACTION_IF_FOUND in
- AC_CHECK_LIB
-Author: Dmitry Eremin-Solenikov <dbaryshkov@gmail.com>
+Description: remove test for OpenSSL, it is not needed
+Author: Simon Josefsson <simon@josefsson.org>
 
 ---
 
 --- gppcscconnectionplugin-1.1.0.orig/configure.in
 +++ gppcscconnectionplugin-1.1.0/configure.in
-@@ -192,7 +192,7 @@ AC_CHECK_HEADERS(openssl/rand.h openssl/
-         [AC_MSG_ERROR([OpenSSL headers not found, install OpenSSL
- 0.9.7e or later, or use CFLAGS=... ./configure])])
+@@ -183,19 +183,6 @@
+ esac
+ LDFLAGS="$OLD_LDFLAGS"
  
+-######################
+-#OpenSSL Configuration
+-######################
+-
+-dnl Check for OpenSSL headers
+-AC_CHECK_HEADERS(openssl/rand.h openssl/err.h openssl/evp.h openssl/pem.h, [],
+-        [AC_MSG_ERROR([OpenSSL headers not found, install OpenSSL
+-0.9.7e or later, or use CFLAGS=... ./configure])])
+-
 -AC_CHECK_LIB(crypto, PEM_read_PrivateKey, [],
-+AC_CHECK_LIB(crypto, PEM_read_PrivateKey, [:],
-         [AC_MSG_ERROR([PEM_read_PrivateKey() not
- found, install OpenSSL 0.9.7e or later])])
- 
+-        [AC_MSG_ERROR([PEM_read_PrivateKey() not
+-found, install OpenSSL 0.9.7e or later])])
+-
+ ###############
+ #Output results
+ ###############

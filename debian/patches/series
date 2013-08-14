@@ -1,3 +1,4 @@
+fix-missing-include.patch
 fix-crypto-link.patch
 fix-protocol-argument.patch
 autoreconf.patch

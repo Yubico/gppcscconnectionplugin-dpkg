@@ -1,0 +1,15 @@
+Description: fix missing include
+Author: Simon Josefsson <simon@josefsson.org>
+
+---
+
+--- gppcscconnectionplugin-1.1.0.orig/src/gppcscconnectionplugin.h
++++ gppcscconnectionplugin-1.1.0/src/gppcscconnectionplugin.h
+@@ -25,6 +25,7 @@
+ #ifdef WIN32
+ #include <WinSCard.h>
+ #else
++#include <PCSC/wintypes.h>
+ #include <PCSC/winscard.h>
+ #endif
+ #include <globalplatform/library.h>
