@@ -3,13 +3,15 @@ Author: Simon Josefsson <simon@josefsson.org>
 
 ---
 
---- gppcscconnectionplugin-1.1.0.orig/src/gppcscconnectionplugin.h
-+++ gppcscconnectionplugin-1.1.0/src/gppcscconnectionplugin.h
-@@ -25,6 +25,7 @@
- #ifdef WIN32
- #include <WinSCard.h>
- #else
+--- gppcscconnectionplugin-1.1.0.orig/src/gppcscconnectionplugin.c
++++ gppcscconnectionplugin-1.1.0/src/gppcscconnectionplugin.c
+@@ -22,7 +22,8 @@
+  * This plugin uses PC/SC to connect to a smart card.
+  *
+  */
+-
++#include <PCSC/winscard.h>
 +#include <PCSC/wintypes.h>
- #include <PCSC/winscard.h>
- #endif
- #include <globalplatform/library.h>
+ #include <globalplatform/connectionplugin.h>
+ #include "gppcscconnectionplugin.h"
+ #include <globalplatform/debug.h>
